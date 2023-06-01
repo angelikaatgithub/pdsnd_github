@@ -6,6 +6,7 @@ Bikeshare project
 
 ### Description
 In this project data from a bikeshare company is analyzed for the cities: Chicago, New york city and Washington.
+Displays statistics on the most frequent times of travel, on the most popular stations and trip, on the total and average trip duration and statistics on bikeshare users.
 
 ### Files used
 bikeshare.py
