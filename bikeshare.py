@@ -168,14 +168,14 @@ def user_stats(df):
     print('\nCounts for each User Type:\n',user_types.to_string())
 
     # Display counts of gender
-    if len(df.columns)== 12:
+    if 'Gender' in df.columns:
         gender_types = df['Gender'].value_counts()
         print('\nCounts for each Gender:\n', gender_types.to_string())
     else:
         print('\nGender data not available!')
         
     # Display earliest, most recent, and most common year of birth
-    if len(df.columns)== 12:
+    if 'Birth Year' in df.columns:
         earliest_yob = df['Birth Year'].min()
         latest_yob = df['Birth Year'].max()
         popular_yob = df['Birth Year'].mode()
