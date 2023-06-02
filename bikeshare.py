@@ -20,39 +20,30 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('\nHello! Let\'s explore some US bikeshare data!')
-    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    city = input('\nWould you like to see data for Chicago, New York City or Washington?\n').lower()
-    
-    while True:
-         if city in CITY_DATA:
-                break
-         else:
-            city = input('\nPlease type in a valid city(\'Chicago\', \'New York City\' or \'Washington\'?\n').lower()
-            continue
-                 
+    # get user input for city (chicago, new york city, washington).
+    city = get_valid_input('\nWould you like to see data for Chicago, New York City, or Washington?\n', CITY_DATA)
     # get user input for month (all, january, february, ... , june)
-    month = input('\nPlease type in a valid month (\'all\',\'january\'-\'june\')?\n').lower()
-    
-    while True:
-        if month in MONTH_DATA or month == 'all':
-            break
-        else:
-             month = input('\nPlease type in a valid month (\'all\' or \'january\'-\'june\')?\n').lower()
-             continue
-            
-
+    month = get_valid_input('\nPlease type in a valid month (\'all\' or \'january\'-\'june\')?\n', MONTH_DATA + ['all'])
     # get user input for day of week (all, monday, tuesday, ... sunday)
-    day = input('\nWould you like to see all days or just one specific day(\'all\',\'monday\'-\'sunday\')?\n').lower()
-    
+    day = get_valid_input('\nWould you like to see all days or just one specific day (\'all\' or \'monday\'-\'sunday\')?\n', DAY_DATA + ['all'])
+    print('-' * 40)
+    return city, month, day
+
+def get_valid_input(prompt, valid_options):
+    """
+    Checks if user input is valid.
+
+    Returns:
+        (str) user input (either city, month or day)
+    """
     while True:
-        if day in DAY_DATA or day == 'all':
+        user_input = input(prompt).lower()
+        if user_input in valid_options:
             break
         else:
-            day = input('\nPlease type in a valid day (\'all\',\'monday\'-\'sunday\')?\n').lower()
-            continue
+            print('Invalid input! Please try again.')
+    return user_input
 
-    print('-'*40)
-    return city, month, day
                               
 def load_data(city, month, day):
     """
@@ -177,14 +168,14 @@ def user_stats(df):
     print('\nCounts for each User Type:\n',user_types.to_string())
 
     # Display counts of gender
-    if len(df.columns)== 12:
+    if 'Gender' in df.columns:
         gender_types = df['Gender'].value_counts()
         print('\nCounts for each Gender:\n', gender_types.to_string())
     else:
         print('\nGender data not available!')
         
     # Display earliest, most recent, and most common year of birth
-    if len(df.columns)== 12:
+    if 'Birth Year' in df.columns:
         earliest_yob = df['Birth Year'].min()
         latest_yob = df['Birth Year'].max()
         popular_yob = df['Birth Year'].mode()
